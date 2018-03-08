@@ -1,4 +1,5 @@
-from PyQt5.QtCore import QRect
+from PyQt5 import QtCore
+from PyQt5.QtCore import QRect, QSize
 from PyQt5.QtGui import QPainter, QImage
 from PyQt5.QtWidgets import QWidget
 from source.UI.widgets.extensions import set_widget_background
@@ -19,4 +20,5 @@ class ResizeableImage(QWidget):
         size = min(self.rect().height(), self.rect().width())
         x = (self.rect().width() - size) / 2
         y = (self.rect().height() - size) / 2
-        painter.drawImage(QRect(x, y, size, size), self.image)
+        painter.drawImage(QRect(x, y, size, size),
+                          self.image.scaled(size, size, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
