@@ -55,7 +55,7 @@ class WeatherWidget(QWidget):
 
     def clock(self):
         while True:
-            time.sleep(5)
+            time.sleep(900)
             self.time_to_update.emit()
 
     @pyqtSlot()

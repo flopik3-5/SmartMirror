@@ -1,7 +1,7 @@
 from random import randint, seed
 from PyQt5.QtGui import QColor
 
-show_widget_borders = True
+show_widget_borders = False
 
 
 def set_widget_background(widget, r=None, g=None, b=None):
