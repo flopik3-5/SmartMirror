@@ -3,6 +3,7 @@ using System.Linq;
 using Android.App;
 using Android.Bluetooth;
 using Android.Content;
+using Java.Util;
 
 namespace SmartMirror.Controllers
 {
@@ -18,8 +19,9 @@ namespace SmartMirror.Controllers
     {
         private static readonly BluetoothAdapter BluetoothAdapter = BluetoothAdapter.DefaultAdapter;
         private static readonly List<BluetoothDevice> BluetoothDevices = new List<BluetoothDevice>();
-
-        public delegate void UpdateListDevices(List<string> devices);
+        private static readonly UUID Uuid = UUID.FromString("94f39d29-7d6d-437d-973b-fba39e49d4ee");
+        
+        public delegate void UpdateListDevices(List<BluetoothDevice> devices);
         public static event UpdateListDevices DeviceDiscovered;
 
         public delegate void DiscoverEvent();
@@ -44,6 +46,16 @@ namespace SmartMirror.Controllers
                 BluetoothAdapter.CancelDiscovery();
             }
             BluetoothAdapter.StartDiscovery();
+        }
+
+        public static void StopDiscovery()
+        {
+            BluetoothAdapter.CancelDiscovery();
+        }
+
+        public static BluetoothSocket GetBluetoothSocket(BluetoothDevice device)
+        {
+            return device.CreateInsecureRfcommSocketToServiceRecord(Uuid);
         }
 
         public override void OnReceive(Context context, Intent intent)
@@ -71,7 +83,7 @@ namespace SmartMirror.Controllers
             if (!BluetoothDevices.Any(x => x.Address.Equals(bluetoothDevice.Address)))
             {
                 BluetoothDevices.Add(bluetoothDevice);
-                DeviceDiscovered?.Invoke(BluetoothDevices.Select(x => x.Name ?? x.Address).ToList());
+                DeviceDiscovered?.Invoke(BluetoothDevices);
             }
         }
 

@@ -2,4 +2,5 @@
 <resources>
   <string name="app_name">Smart Mirror</string>
   <string name="mainHeaderText">Search Smart Mirror</string>
+  <string name="configHeaderText">Configure your device</string>
 </resources>

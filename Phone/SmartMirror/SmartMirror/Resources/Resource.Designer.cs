@@ -82,14 +82,35 @@ namespace SmartMirror
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f060001
-			public const int mainDevicesList = 2131099649;
-			
 			// aapt resource value: 0x7f060000
-			public const int mainHeaderText = 2131099648;
+			public const int bluetoothListRowName = 2131099648;
+			
+			// aapt resource value: 0x7f060005
+			public const int configDialogCancelButton = 2131099653;
+			
+			// aapt resource value: 0x7f060003
+			public const int configDialogLinearLayout = 2131099651;
+			
+			// aapt resource value: 0x7f060004
+			public const int configDialogSaveButton = 2131099652;
 			
 			// aapt resource value: 0x7f060002
-			public const int mainRefreshButton = 2131099650;
+			public const int configFieldsList = 2131099650;
+			
+			// aapt resource value: 0x7f060001
+			public const int configHeaderText = 2131099649;
+			
+			// aapt resource value: 0x7f060006
+			public const int configListRowName = 2131099654;
+			
+			// aapt resource value: 0x7f060008
+			public const int mainDevicesList = 2131099656;
+			
+			// aapt resource value: 0x7f060007
+			public const int mainHeaderText = 2131099655;
+			
+			// aapt resource value: 0x7f060009
+			public const int mainRefreshButton = 2131099657;
 			
 			static Id()
 			{
@@ -105,7 +126,19 @@ namespace SmartMirror
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Main = 2130903040;
+			public const int BluetoothListRow = 2130903040;
+			
+			// aapt resource value: 0x7f030001
+			public const int Config = 2130903041;
+			
+			// aapt resource value: 0x7f030002
+			public const int ConfigDialog = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int ConfigListRow = 2130903043;
+			
+			// aapt resource value: 0x7f030004
+			public const int Main = 2130903044;
 			
 			static Layout()
 			{
@@ -122,6 +155,9 @@ namespace SmartMirror
 			
 			// aapt resource value: 0x7f050000
 			public const int app_name = 2131034112;
+			
+			// aapt resource value: 0x7f050002
+			public const int configHeaderText = 2131034114;
 			
 			// aapt resource value: 0x7f050001
 			public const int mainHeaderText = 2131034113;

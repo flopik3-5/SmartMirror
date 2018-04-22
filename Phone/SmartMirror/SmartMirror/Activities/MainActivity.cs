@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Android.App;
-using Android.Widget;
+using Android.Bluetooth;
+using Android.Content;
 using Android.OS;
 using Android.Views.Animations;
+using Android.Widget;
+using Java.Util;
+using Newtonsoft.Json;
+using SmartMirror.Adapters;
 using SmartMirror.Controllers;
 
-namespace SmartMirror
+namespace SmartMirror.Activities
 {
     [Activity(Label = "Smart Mirror", MainLauncher = true, Icon = "@drawable/icon", 
-        Theme = "@android:style/Theme.Material.Light.NoActionBar")]
+        Theme = "@android:style/Theme.Material.Light")]
     public class MainActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -24,10 +30,10 @@ namespace SmartMirror
         
         private void InitializeGui()
         {
-            var refreshButton = FindViewById<ImageButton>(Resource.Id.mainRefreshButton);
-            refreshButton.Click += RefreshButtonClick;
+            FindViewById<ImageButton>(Resource.Id.mainRefreshButton).Click += RefreshButtonClick;
+            FindViewById<ListView>(Resource.Id.mainDevicesList).ItemClick += DeviceListItemClick;
         }
-
+        
         private void InitializeBluetoothController()
         {
             BluetoothController.DeviceDiscovered += RefreshListDevices;
@@ -70,10 +76,17 @@ namespace SmartMirror
             }
         }
 
-        private void RefreshListDevices(List<string> devices)
+        private void RefreshListDevices(List<BluetoothDevice> devices)
         {
-            FindViewById<ListView>(Resource.Id.mainDevicesList).Adapter =
-                new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, devices);
+            FindViewById<ListView>(Resource.Id.mainDevicesList).Adapter = new BluetoothListAdapter(this, devices);
+        }
+
+        private void DeviceListItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            BluetoothController.StopDiscovery();
+            var configActivity = new Intent(this, typeof(ConfigActivity));
+            configActivity.PutExtra("Device", (BluetoothDevice)e.Parent.GetItemAtPosition(e.Position));
+            StartActivityForResult(configActivity, 0);
         }
 
         private void BluetoothStateChanged(bool isEnable)
@@ -93,6 +106,16 @@ namespace SmartMirror
             else
             {
                 BluetoothController.Enable();
+            }
+        }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            
+            if (resultCode == Result.Canceled && data != null)
+            {
+                Toast.MakeText(this, data.GetStringExtra("Message"),ToastLength.Short).Show();
             }
         }
     }
