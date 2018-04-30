@@ -1,0 +1,9 @@
+{
+  "top": "title_news_block",
+  "finance": "finance_news_block",
+  "building": "realty_news_block",
+  "sport": "sport_news_block",
+  "auto": "auto_news_block",
+  "lady": "lady_news_block",
+  "forty_two": "it_news_block"
+}
